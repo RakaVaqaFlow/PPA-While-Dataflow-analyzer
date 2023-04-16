@@ -10,8 +10,13 @@ fun SeqStatementContext.highlight() = statement().forEach { statement ->
     val usedVars = getUsedVariables(statement)
 
     val unusedVars = initializedVars - usedVars
+    val usedButNotInitializedVars = usedVars - initializedVars
 
-    unusedVars.forEach { unusedVar ->
-        println("The variable is declared but not used: $unusedVar")
+    usedButNotInitializedVars.joinToString(separator = "\n") {
+        "The variable is used but was not declared: $it"
+    }
+
+    unusedVars.joinToString(separator = "\n") {
+        "The variable is declared but not used: $it"
     }
 }
