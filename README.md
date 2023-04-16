@@ -69,3 +69,58 @@ while b <= 1000000 do {
 ```
 
 #### DataFlow Analyzer
+
+Our dataflow analyzer is an implementation of the dead code elimination method.
+
+**What is dead code?**
+
+Dead code can be described as any piece of code which will not get executed or is not reachable. By analyzing and eliminating dead code, we can identify redundant code that takes up resources and reduces the overall performance of the program. Removing unnecessary code can also reduce the risk of bugs or vulnerabilities, which contributes to the security of the program.
+
+**How it is implemented?**
+
+To implement this approach, we chose the kotlin programming language. With ANTLR we generated all the necessary files. Our algorithm traverses a concrete syntax tree and separately stores declared variables (`InitializedVariablesObtainer`) and variables that are used in various expressions (`UsedVariablesObtainer`).
+If the program does not contain dead code, the two sets will be the same, which we get as a result of calling these functions. Otherwise, the program contains dead code
+
+**Details**
+
+*Domain:* Variable names
+
+*Transfer functions:* print, :=, if, while
+
+**Examples**
+
+Program without dead code:
+```
+print "Enter the first number:";
+a := read;
+print "Enter the second number:";
+b := read;
+sum := a + b;
+print "The sum is: ";
+print sum
+```
+Result:
+```
+The input WHILE program is syntactically correct
+```
+
+
+Program with dead code:
+
+```
+print "Enter the first number:";
+a := read;
+print "Enter the second number:";
+b := read;
+sum := a;
+print "The sum is: ";
+print sum
+```
+
+Result:
+```
+The variable is declared but unused: b
+The input WHILE program is syntactically correct
+```
+
+Also you can run tests for our solution: run `MainTest.kt`
