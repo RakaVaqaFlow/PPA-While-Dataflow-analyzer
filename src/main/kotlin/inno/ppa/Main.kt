@@ -2,8 +2,20 @@ package inno.ppa
 
 import WhilelangLexer
 import WhilelangParser
+import WhilelangParser.ProgramContext
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
+
+
+fun getInitializedVariables(statements: List<WhilelangParser.StatementContext>): Set<String> {
+    return emptySet()
+}
+
+
+fun getUsedVariables(statements: List<WhilelangParser.StatementContext>): Set<String> {
+    return emptySet()
+}
+
 
 fun main() {
     // Init part
@@ -12,7 +24,8 @@ fun main() {
     val stream = CommonTokenStream(lexer)
     val parser = WhilelangParser(stream)
 
-     parser.program()
+    parser.program()
+    parser.program()
 
     if (parser.numberOfSyntaxErrors == 0) {
         println("The input WHILE program is syntactically correct")
