@@ -6,4 +6,3 @@ pluginManagement {
     
 }
 rootProject.name = "PPA-While-Dataflow-analyzer"
-

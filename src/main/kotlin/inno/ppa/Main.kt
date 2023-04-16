@@ -21,11 +21,45 @@ fun getInitializedVariables(statementContext: StatementContext): Set<String> {
 }
 }
 
-
 fun getUsedVariables(statements: List<WhilelangParser.StatementContext>): Set<String> {
-    return emptySet()
-}
+    var usedVariables = emptySet<String>()
 
+    for (statement in statements) {
+        when (statement) {
+            is WhilelangParser.AttribContext ->{
+                //TODO()
+            }
+            is WhilelangParser.WriteContext -> {
+                //TODO()
+            }
+            is WhilelangParser.PrintContext -> {
+                //TODO()
+            }
+            is WhilelangParser.IdContext -> {
+                //TODO()
+            }
+            is WhilelangParser.IfContext -> {
+                //TODO()
+            }
+            is WhilelangParser.WhileContext -> {
+                //TODO()
+            }
+            is WhilelangParser.BlockContext -> {
+                //TODO()
+            }
+            is WhilelangParser.SkipContext -> {
+                //TODO()
+            }
+            is WhilelangParser.SeqStatementContext -> {
+                //TODO()
+            }
+            else -> {
+                throw Exception("Unknown statement type")
+            }
+
+        }
+    }
+}
 
 fun main() {
     // Init part
