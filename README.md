@@ -79,7 +79,7 @@ Dead code can be described as any piece of code which will not get executed or i
 **How it is implemented?**
 
 To implement this approach, we chose the kotlin programming language. With ANTLR we generated all the necessary files. Our algorithm traverses a concrete syntax tree and separately stores declared variables (`InitializedVariablesObtainer`) and variables that are used in various expressions (`UsedVariablesObtainer`).
-If the program does not contain dead code, the two sets will be the same, which we get as a result of calling these functions. Otherwise, the program contains dead code
+If the program does not contain dead code, the two sets will be the same, which we get as a result of calling these functions. Otherwise, the program contains dead code.
 
 **Details**
 
