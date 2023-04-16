@@ -1,14 +1,24 @@
 package inno.ppa
 
+import WhilelangParser.*;
 import WhilelangLexer
 import WhilelangParser
-import WhilelangParser.ProgramContext
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
 
+fun getInitializedVariables(statementContext: StatementContext): Set<String> {
+    val initializedVariables = mutableSetOf<String>();
+    when (statementContext) {
+        is AttribContext -> {
+            initializedVariables.add(statementContext.ID().text)
+        }
 
-fun getInitializedVariables(statements: List<WhilelangParser.StatementContext>): Set<String> {
-    return emptySet()
+        is IfContext -> {
+            initializedVariables.addAll(getInitializedVariables(statementContext.statement()[0]))
+            initializedVariables.addAll(getInitializedVariables(statementContext.statement()[1]))
+        }
+    }
+}
 }
 
 
