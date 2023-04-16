@@ -1,12 +1,9 @@
 package inno.ppa
 
-import WhilelangParser.*
 import WhilelangLexer
 import WhilelangParser
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
-
-
 
 fun main() {
     // Init part
@@ -15,7 +12,7 @@ fun main() {
     val stream = CommonTokenStream(lexer)
     val parser = WhilelangParser(stream)
 
-    parser.program()
+    parser.program().highlight()
 
     if (parser.numberOfSyntaxErrors == 0) {
         println("The input WHILE program is syntactically correct")
