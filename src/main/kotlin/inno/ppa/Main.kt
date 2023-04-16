@@ -21,42 +21,38 @@ fun getInitializedVariables(statementContext: StatementContext): Set<String> {
     return initializedVariables
 }
 
-fun getUsedVariables(statements: List<WhilelangParser.StatementContext>): Set<String> {
+fun getUsedVariables(statementContext: StatementContext): Set<String> {
     val usedVariables = emptySet<String>()
-
-    for (statement in statements) {
-        when (statement) {
-            is WhilelangParser.AttribContext ->{
-                //TODO()
-            }
-            is WhilelangParser.WriteContext -> {
-                //TODO()
-            }
-            is WhilelangParser.PrintContext -> {
-                //TODO()
-            }
-            is WhilelangParser.IdContext -> {
-                //TODO()
-            }
-            is WhilelangParser.IfContext -> {
-                //TODO()
-            }
-            is WhilelangParser.WhileContext -> {
-                //TODO()
-            }
-            is WhilelangParser.BlockContext -> {
-                //TODO()
-            }
-            is WhilelangParser.SkipContext -> {
-                //TODO()
-            }
-            is WhilelangParser.SeqStatementContext -> {
-                //TODO()
-            }
-            else -> {
-                throw Exception("Unknown statement type")
-            }
-
+    when (statementContext) {
+        is AttribContext ->{
+            //TODO()
+        }
+        is WriteContext -> {
+            //TODO()
+        }
+        is PrintContext -> {
+            //TODO()
+        }
+        is IdContext -> {
+            //TODO()
+        }
+        is IfContext -> {
+            //TODO()
+        }
+        is WhileContext -> {
+            //TODO()
+        }
+        is BlockContext -> {
+            //TODO()
+        }
+        is SkipContext -> {
+            //TODO()
+        }
+        is SeqStatementContext -> {
+            //TODO()
+        }
+        else -> {
+            throw Exception("Unknown statement type")
         }
     }
     return usedVariables
