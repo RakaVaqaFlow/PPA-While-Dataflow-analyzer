@@ -2,20 +2,16 @@ package inno.ppa
 
 import WhilelangLexer
 import WhilelangParser
-import WhilelangParser.ProgramContext
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
-
 
 fun getInitializedVariables(statements: List<WhilelangParser.StatementContext>): Set<String> {
     return emptySet()
 }
 
-
 fun getUsedVariables(statements: List<WhilelangParser.StatementContext>): Set<String> {
     return emptySet()
 }
-
 
 fun main() {
     // Init part
