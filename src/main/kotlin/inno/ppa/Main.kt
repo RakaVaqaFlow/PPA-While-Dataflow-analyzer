@@ -5,9 +5,9 @@ import WhilelangParser
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
 
-fun main() {
+fun main(filepath: String) {
     // Init part
-    val cs = CharStreams.fromFileName("sample.while")
+    val cs = CharStreams.fromFileName(filepath)
     val lexer = WhilelangLexer(cs)
     val stream = CommonTokenStream(lexer)
     val parser = WhilelangParser(stream)
