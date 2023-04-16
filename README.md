@@ -83,9 +83,9 @@ If the program does not contain dead code, the two sets will be the same, which 
 
 **Details**
 
-*Domain:* Variable names
+Domain: Variable names
 
-*Transfer functions:* print, :=, if, while
+Transfer functions: ['print', ':=', 'if', 'while']
 
 **Examples**
 
