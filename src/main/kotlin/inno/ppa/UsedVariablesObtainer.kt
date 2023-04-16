@@ -1,90 +1,81 @@
 package inno.ppa
 
 import WhilelangParser.*
-import java.beans.Expression
 
 fun getUsedVariables(statementContext: StatementContext): Set<String> {
     val usedVariables = mutableSetOf<String>()
 
     when (statementContext) {
         is AttribContext -> {
-            usedVariables.addAll(getUsedVariables(statementContext.expression()))
-
-        }
-
-        is WriteContext -> {
-            //TODO()
-        }
-
-        is PrintContext -> {
-            //TODO()
-        }
-
-        is IdContext -> {
-            //TODO()
+            usedVariables.addAll(getUsedVariablesInExpression(statementContext.expression()))
         }
 
         is IfContext -> {
-            //TODO()
+            usedVariables.addAll(getUsedVariablesInBool(statementContext.bool()))
+            usedVariables.addAll(getUsedVariables(statementContext.statement()[0]))
+            usedVariables.addAll(getUsedVariables(statementContext.statement()[1]))
         }
 
         is WhileContext -> {
-            //TODO()
+            usedVariables.addAll(getUsedVariablesInBool(statementContext.bool()))
+            usedVariables.addAll(getUsedVariables(statementContext.statement()))
+        }
+
+        is WriteContext -> {
+            usedVariables.addAll(getUsedVariablesInExpression(statementContext.expression()))
         }
 
         is BlockContext -> {
-            //TODO()
+            statementContext.seqStatement().statement().forEach {
+                usedVariables.addAll(getInitializedVariables(it))
+            }
+        }
+    }
+
+    return usedVariables
+}
+
+
+private fun getUsedVariablesInBool(expression: BoolContext): Set<String> {
+    val usedVariables = mutableSetOf<String>()
+    when (expression) {
+        is RelOpContext -> {
+            usedVariables.addAll(getUsedVariablesInExpression(expression.expression()[0]))
+            usedVariables.addAll(getUsedVariablesInExpression(expression.expression()[1]))
         }
 
-        is SkipContext -> {
-            //TODO()
+        is NotContext -> {
+            usedVariables.addAll(getUsedVariablesInBool(expression.bool()))
         }
 
-        is SeqStatementContext -> {
-            //TODO()
+        is AndContext -> {
+            usedVariables.addAll(getUsedVariablesInBool(expression.bool()[0]))
+            usedVariables.addAll(getUsedVariablesInBool(expression.bool()[1]))
         }
 
-        else -> {
-            throw Exception("Unknown statement type")
+        is BoolParenContext -> {
+            usedVariables.addAll(getUsedVariablesInBool(expression.bool()))
         }
     }
     return usedVariables
 }
 
-fun getUsedVariablesInExpression(expression: ExpressionContext): Set<String> {
+private fun getUsedVariablesInExpression(expression: ExpressionContext): Set<String> {
     val usedVariables = mutableSetOf<String>()
     when (expression) {
         is IdContext -> {
             usedVariables.add(expression.ID().text)
         }
 
-        is ReadContext -> {
-            //TODO()
-        }
-
-        is BoolContext -> {
-            //TODO()
-        }
-
-        is IntContext -> {
-            //TODO()
-        }
-
         is BinOpContext -> {
-            //TODO()
+            usedVariables.addAll(getUsedVariablesInExpression(expression.expression()[0]))
+            usedVariables.addAll(getUsedVariablesInExpression(expression.expression()[1]))
         }
 
         is ExpParenContext -> {
-            //TODO()
-        }
-
-        is AndContext -> {
-            //TODO()
-        }
-
-        else -> {
-            throw Exception("Unknown expression type")
+            usedVariables.addAll(getUsedVariablesInExpression(expression.expression()))
         }
     }
+
     return usedVariables
 }
