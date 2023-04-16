@@ -1,6 +1,6 @@
 package inno.ppa
 
-import WhilelangParser.*;
+import WhilelangParser.*
 import WhilelangLexer
 import WhilelangParser
 import org.antlr.v4.runtime.CharStreams
@@ -18,11 +18,11 @@ fun getInitializedVariables(statementContext: StatementContext): Set<String> {
             initializedVariables.addAll(getInitializedVariables(statementContext.statement()[1]))
         }
     }
-}
+    return initializedVariables
 }
 
 fun getUsedVariables(statements: List<WhilelangParser.StatementContext>): Set<String> {
-    var usedVariables = emptySet<String>()
+    val usedVariables = emptySet<String>()
 
     for (statement in statements) {
         when (statement) {
@@ -59,6 +59,7 @@ fun getUsedVariables(statements: List<WhilelangParser.StatementContext>): Set<St
 
         }
     }
+    return usedVariables
 }
 
 fun main() {
@@ -68,7 +69,6 @@ fun main() {
     val stream = CommonTokenStream(lexer)
     val parser = WhilelangParser(stream)
 
-    parser.program()
     parser.program()
 
     if (parser.numberOfSyntaxErrors == 0) {
