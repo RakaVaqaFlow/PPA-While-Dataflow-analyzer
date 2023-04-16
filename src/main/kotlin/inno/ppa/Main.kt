@@ -12,7 +12,10 @@ fun main() {
     val stream = CommonTokenStream(lexer)
     val parser = WhilelangParser(stream)
 
-    parser.program().highlight()
+    parser.program().run {
+        highlightUndeclaredVars()
+        highlightUnusedVars()
+    }
 
     if (parser.numberOfSyntaxErrors == 0) {
         println("The input WHILE program is syntactically correct")

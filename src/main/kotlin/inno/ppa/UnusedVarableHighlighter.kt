@@ -3,20 +3,32 @@ package inno.ppa
 import WhilelangParser.ProgramContext
 import WhilelangParser.SeqStatementContext
 
-fun ProgramContext.highlight() = seqStatement().highlight()
+fun ProgramContext.highlightUnusedVars() = seqStatement().highlightUnusedVars()
 
-fun SeqStatementContext.highlight() = statement().forEach { statement ->
-    val initializedVars = getInitializedVariables(statement)
-    val usedVars = getUsedVariables(statement)
+fun ProgramContext.highlightUndeclaredVars() = seqStatement().highlightUndeclaredVars()
 
-    val unusedVars = initializedVars - usedVars
-    val usedButNotInitializedVars = usedVars - initializedVars
+fun SeqStatementContext.getInitializedAndUsed(): Pair<Set<String>, Set<String>> {
+    val allInitializedVars = statement()
+        .flatMap { getInitializedVariables(it) }
+        .toSet()
+    val allUsedVars = statement()
+        .flatMap { getUsedVariables(it) }
+        .toSet()
 
-    usedButNotInitializedVars.forEach {
-        println("The variable is used but was not declared: $it")
+    return allInitializedVars to allUsedVars
+}
+
+fun SeqStatementContext.highlightUnusedVars() {
+    getInitializedAndUsed().also { (initializedVars, usedVars) ->
+        (initializedVars - usedVars).forEach {
+            println("The variable is declared but unused: $it")
+        }
     }
-
-    unusedVars.forEach {
-        println("The variable is declared but not used: $it")
+}
+fun SeqStatementContext.highlightUndeclaredVars() {
+    getInitializedAndUsed().also { (initializedVars, usedVars) ->
+        (usedVars - initializedVars).forEach {
+            println("The variable is used but undeclared: $it")
+        }
     }
 }
