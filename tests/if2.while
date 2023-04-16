@@ -1,0 +1,6 @@
+a := 1;
+b := read;
+if a <= b then {
+    b := b + a
+} else skip;
+print b

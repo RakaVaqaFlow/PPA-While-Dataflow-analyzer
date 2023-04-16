@@ -1,0 +1,5 @@
+a := 1;
+b := read;
+if a <= b then {
+    print(a)
+} else skip

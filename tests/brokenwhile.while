@@ -1,0 +1,6 @@
+a := 0;
+b := 1;
+while b <= 123 do {
+  b := a + 1
+};
+print a

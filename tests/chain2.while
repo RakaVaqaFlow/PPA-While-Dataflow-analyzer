@@ -1,0 +1,6 @@
+a := 1;
+b := 1;
+c := b;
+d := c;
+print a;
+print d

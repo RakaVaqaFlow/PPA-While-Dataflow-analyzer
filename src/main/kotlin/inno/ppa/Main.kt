@@ -7,7 +7,7 @@ import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
 
 fun getInitializedVariables(statementContext: StatementContext): Set<String> {
-    val initializedVariables = mutableSetOf<String>();
+    val initializedVariables = mutableSetOf<String>()
     when (statementContext) {
         is AttribContext -> {
             initializedVariables.add(statementContext.ID().text)
@@ -16,6 +16,16 @@ fun getInitializedVariables(statementContext: StatementContext): Set<String> {
         is IfContext -> {
             initializedVariables.addAll(getInitializedVariables(statementContext.statement()[0]))
             initializedVariables.addAll(getInitializedVariables(statementContext.statement()[1]))
+        }
+
+        is WhileContext -> {
+            initializedVariables.addAll(getInitializedVariables(statementContext.statement()))
+        }
+
+        is BlockContext -> {
+            statementContext.seqStatement().statement().forEach {
+                initializedVariables.addAll(getInitializedVariables(it))
+            }
         }
     }
     return initializedVariables
